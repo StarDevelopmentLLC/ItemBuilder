@@ -1,6 +1,6 @@
 package com.stardevllc.itembuilder.v1_16_1;
 
-import com.stardevllc.itembuilder.ItemBuilder;
+import com.stardevllc.itembuilder.common.ItemBuilder;
 import com.stardevllc.smaterial.SMaterial;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.TextComponent;

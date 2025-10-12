@@ -38,15 +38,13 @@ java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(21)
     }
-
-//    withJavadocJar()
-//    withSourcesJar()
 }
 
 dependencies {
     compileOnly 'org.spigotmc:spigot-api:1.21.10-R0.1-SNAPSHOT'
     compileOnly "com.stardevllc:StarLib:${starlibVersion}"
     compileOnly "com.stardevllc:SMaterial:${starmaterialVersion}"
+    compileOnly "com.stardevllc:SMCVersion:${smcversionVersion}"
     
     implementation project(':common')
     implementation project(':v1_8')
@@ -65,19 +63,13 @@ tasks.named('shadowJar', ShadowJar) {
 }
 
 tasks.compileJava.dependsOn(clean)
-//tasks.jar.finalizedBy(javadocJar)
-//tasks.jar.finalizedBy(sourcesJar)
 tasks.jar.finalizedBy(shadowJar)
 tasks.build.finalizedBy(publishToMavenLocal)
 
 tasks.withType(PublishToMavenLocal).configureEach {
-//    dependsOn(javadocJar)
-//    dependsOn(sourcesJar)
     dependsOn(shadowJar)
 }
 
 tasks.withType(PublishToMavenRepository).configureEach {
-//    dependsOn(javadocJar)
-//    dependsOn(sourcesJar)
     dependsOn(shadowJar)
 }

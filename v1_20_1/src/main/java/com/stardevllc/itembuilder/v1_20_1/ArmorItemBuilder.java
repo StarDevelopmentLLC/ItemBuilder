@@ -1,6 +1,6 @@
 package com.stardevllc.itembuilder.v1_20_1;
 
-import com.stardevllc.itembuilder.ItemBuilder;
+import com.stardevllc.itembuilder.common.ItemBuilder;
 import com.stardevllc.smaterial.*;
 import org.bukkit.Color;
 import org.bukkit.inventory.ItemStack;

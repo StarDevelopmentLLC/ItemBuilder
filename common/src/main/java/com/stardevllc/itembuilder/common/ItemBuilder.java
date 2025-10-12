@@ -1,4 +1,4 @@
-package com.stardevllc.itembuilder;
+package com.stardevllc.itembuilder.common;
 
 import com.stardevllc.smaterial.SMaterial;
 import com.stardevllc.smcversion.MCWrappers;

@@ -1,6 +1,6 @@
 package com.stardevllc.itembuilder.v1_8;
 
-import com.stardevllc.itembuilder.ItemBuilder;
+import com.stardevllc.itembuilder.common.ItemBuilder;
 import com.stardevllc.smaterial.SMaterial;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;

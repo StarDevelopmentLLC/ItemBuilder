@@ -1,4 +1,4 @@
-package com.stardevllc.itembuilder;
+package com.stardevllc.itembuilder.common;
 
 import com.stardevllc.smaterial.SMaterial;
 import org.bukkit.inventory.ItemStack;
