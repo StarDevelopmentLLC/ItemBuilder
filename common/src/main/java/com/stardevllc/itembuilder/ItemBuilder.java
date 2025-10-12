@@ -1,15 +1,13 @@
 package com.stardevllc.itembuilder;
 
-//import com.stardevllc.starcore.api.wrappers.AttributeModifierWrapper;
-//import com.stardevllc.starcore.api.wrappers.MCWrappers;
-
 import com.stardevllc.smaterial.SMaterial;
+import com.stardevllc.smcversion.MCWrappers;
+import com.stardevllc.smcversion.wrappers.AttributeModifierWrapper;
 import com.stardevllc.starlib.builder.IBuilder;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
 import org.bukkit.enchantments.Enchantment;
-import org.bukkit.inventory.ItemFlag;
-import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.*;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.Repairable;
 
@@ -22,7 +20,7 @@ public abstract class ItemBuilder<I extends ItemBuilder<I, M>, M extends ItemMet
     
     protected SMaterial material;
     protected int amount;
-//    protected Map<String, AttributeModifierWrapper> attributes = new HashMap<>();
+    protected Map<String, AttributeModifierWrapper> attributes = new HashMap<>();
     protected Map<Enchantment, Integer> enchantments = new HashMap<>();
     protected List<ItemFlag> itemFlags = new ArrayList<>();
     protected String displayName;
@@ -32,17 +30,13 @@ public abstract class ItemBuilder<I extends ItemBuilder<I, M>, M extends ItemMet
     protected int damage;
 
     protected Map<String, Object> customNBT = new HashMap<>();
-    
-//    protected static MCWrappers getMCWrappers() {
-//        return Bukkit.getServicesManager().getRegistration(MCWrappers.class).getProvider();
-//    }
 
     public ItemBuilder() {}
     
     public ItemBuilder(I builder) {
         this.material = builder.material;
         this.amount = builder.amount;
-//        this.attributes.putAll(builder.attributes);
+        this.attributes.putAll(builder.attributes);
         this.enchantments.putAll(builder.enchantments);
         this.itemFlags.addAll(builder.itemFlags);
         this.displayName = builder.displayName;
@@ -64,10 +58,10 @@ public abstract class ItemBuilder<I extends ItemBuilder<I, M>, M extends ItemMet
 //            damage = nbt.getInteger("Damage");
 //        });
         
-//        Map<String, AttributeModifierWrapper> attributeModifiers = getMCWrappers().getItemWrapper().getAttributeModifiers(itemStack);
-//        if (attributeModifiers != null) {
-//            attributes.putAll(attributeModifiers);
-//        }
+        Map<String, AttributeModifierWrapper> attributeModifiers = MCWrappers.getItemWrapper().getAttributeModifiers(itemStack);
+        if (attributeModifiers != null) {
+            attributes.putAll(attributeModifiers);
+        }
         
         ItemMeta itemMeta = itemStack.getItemMeta();
         if (itemMeta != null) {
@@ -113,15 +107,15 @@ public abstract class ItemBuilder<I extends ItemBuilder<I, M>, M extends ItemMet
         this.material = material;
     }
 
-//    public I addAttributeModifier(String attribute, String name, double amount, String operation, EquipmentSlot slot) {
-//        this.attributes.put(attribute, new AttributeModifierWrapper(UUID.randomUUID(), name, amount, operation, slot));
-//        return self();
-//    }
-//
-//    public I addAttributeModifier(String attribute, String name, double amount, String operation) {
-//        this.attributes.put(attribute, new AttributeModifierWrapper(UUID.randomUUID(), name, amount, operation, null));
-//        return self();
-//    }
+    public I addAttributeModifier(String attribute, String name, double amount, String operation, EquipmentSlot slot) {
+        this.attributes.put(attribute, new AttributeModifierWrapper(UUID.randomUUID(), name, amount, operation, slot));
+        return self();
+    }
+
+    public I addAttributeModifier(String attribute, String name, double amount, String operation) {
+        this.attributes.put(attribute, new AttributeModifierWrapper(UUID.randomUUID(), name, amount, operation, null));
+        return self();
+    }
 
     public I addEnchant(Enchantment enchantment, int level) {
         this.enchantments.put(enchantment, level);
@@ -226,19 +220,18 @@ public abstract class ItemBuilder<I extends ItemBuilder<I, M>, M extends ItemMet
             return null;
         }
 
-//        if (material.parseMaterial() == null) {
-//            return null;
-//        }
+        if (material.parseMaterial() == null) {
+            return null;
+        }
 
         ItemStack itemStack = material.parseItem();
-//        ItemStack itemStack = new ItemStack(material);
         itemStack.setAmount(amount);
         ItemMeta itemMeta = createItemMeta();
         itemStack.setItemMeta(itemMeta);
         
-//        if (!attributes.isEmpty()) {
-//            this.attributes.forEach((attribute, modifier) -> getMCWrappers().getItemWrapper().addAttributeModifier(itemStack, attribute, modifier));
-//        }
+        if (!attributes.isEmpty()) {
+            this.attributes.forEach((attribute, modifier) -> MCWrappers.getItemWrapper().addAttributeModifier(itemStack, attribute, modifier));
+        }
 //
 //        NBT.modify(itemStack, nbtItem -> {
 //            if (!this.customNBT.isEmpty()) {

@@ -12,6 +12,7 @@ dependencies {
     compileOnly 'org.spigotmc:spigot-api:1.8-R0.1-SNAPSHOT'
     compileOnly "com.stardevllc:StarLib:${starlibVersion}"
     compileOnly "com.stardevllc:SMaterial:${starmaterialVersion}"
+    compileOnly "com.stardevllc:SMCVersion:${smcversionVersion}"
 }
 
 java {
