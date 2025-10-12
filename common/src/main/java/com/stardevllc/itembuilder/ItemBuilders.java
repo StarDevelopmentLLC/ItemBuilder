@@ -1,5 +1,6 @@
 package com.stardevllc.itembuilder;
 
+import com.stardevllc.smaterial.SMaterial;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -16,12 +17,12 @@ public final class ItemBuilders {
         META_TO_BUILDERS.put(meta, builder);
     }
     
-    public static <M extends ItemMeta, I extends ItemBuilder<I, M>> I of(Class<I> builderClass, Material material) {
+    public static <M extends ItemMeta, I extends ItemBuilder<I, M>> I of(Class<I> builderClass, SMaterial material) {
         return (I) of(material);
     }
     
-    public static ItemBuilder<?, ?> of(Material xMaterial) {
-        Material material = xMaterial/*.parseMaterial()*/;
+    public static ItemBuilder<?, ?> of(SMaterial xMaterial) {
+        Material material = xMaterial.parseMaterial();
         ItemMeta itemMeta = Bukkit.getItemFactory().getItemMeta(material);
         
         if (itemMeta == null) {
@@ -34,7 +35,7 @@ public final class ItemBuilders {
             try {
                 Constructor<? extends ItemBuilder<?, ?>> matConstructor = builderClass.getDeclaredConstructor(Material.class);
                 matConstructor.setAccessible(true);
-                return matConstructor.newInstance(xMaterial);
+                return matConstructor.newInstance(material);
             } catch (Exception e) {
                 try {
                     Constructor<? extends ItemBuilder<?, ?>> noArgsConstructor = builderClass.getDeclaredConstructor();

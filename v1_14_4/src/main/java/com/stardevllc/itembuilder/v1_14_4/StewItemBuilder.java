@@ -1,7 +1,7 @@
 package com.stardevllc.itembuilder.v1_14_4;
 
 import com.stardevllc.itembuilder.ItemBuilder;
-import org.bukkit.Material;
+import com.stardevllc.smaterial.SMaterial;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SuspiciousStewMeta;
 import org.bukkit.potion.PotionEffect;
@@ -14,7 +14,7 @@ public class StewItemBuilder extends ItemBuilder<StewItemBuilder, SuspiciousStew
     private List<PotionEffect> effects = new ArrayList<>();
     
     public StewItemBuilder() {
-        super(Material.SUSPICIOUS_STEW);
+        super(SMaterial.SUSPICIOUS_STEW);
     }
     
     public StewItemBuilder(ItemStack itemStack) {

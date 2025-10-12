@@ -1,7 +1,7 @@
 package com.stardevllc.itembuilder.v1_8;
 
 import com.stardevllc.itembuilder.ItemBuilder;
-import org.bukkit.Material;
+import com.stardevllc.smaterial.SMaterial;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 
@@ -10,7 +10,7 @@ public class SkullItemBuilder extends ItemBuilder<SkullItemBuilder, SkullMeta> {
     private String owner;
     
     public SkullItemBuilder() {
-        super(Material.SKULL_ITEM);
+        super(SMaterial.PLAYER_HEAD);
     }
     
     public SkullItemBuilder(SkullItemBuilder builder) {

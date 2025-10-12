@@ -1,7 +1,7 @@
 package com.stardevllc.itembuilder.v1_8;
 
 import com.stardevllc.itembuilder.ItemBuilder;
-import org.bukkit.Material;
+import com.stardevllc.smaterial.SMaterial;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.EnchantmentStorageMeta;
@@ -14,7 +14,7 @@ public class EnchantedBookBuilder extends ItemBuilder<EnchantedBookBuilder, Ench
     protected Map<Enchantment, Integer> storedEnchants = new HashMap<>();
     
     public EnchantedBookBuilder() {
-        super(Material.ENCHANTED_BOOK);
+        super(SMaterial.ENCHANTED_BOOK);
     }
     
     public EnchantedBookBuilder(ItemStack itemStack) {

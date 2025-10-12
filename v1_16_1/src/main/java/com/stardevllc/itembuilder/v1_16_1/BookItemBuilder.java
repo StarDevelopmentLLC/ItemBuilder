@@ -1,9 +1,9 @@
 package com.stardevllc.itembuilder.v1_16_1;
 
 import com.stardevllc.itembuilder.ItemBuilder;
+import com.stardevllc.smaterial.SMaterial;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.TextComponent;
-import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BookMeta;
 
@@ -17,7 +17,7 @@ public class BookItemBuilder extends ItemBuilder<BookItemBuilder, BookMeta> {
     private BookMeta.Generation generation;
     private String title;
     
-    public BookItemBuilder(Material material) {
+    public BookItemBuilder(SMaterial material) {
         super(material);
     }
     

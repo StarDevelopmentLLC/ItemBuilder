@@ -1,8 +1,8 @@
 package com.stardevllc.itembuilder.v1_13;
 
 import com.stardevllc.itembuilder.ItemBuilder;
+import com.stardevllc.smaterial.SMaterial;
 import org.bukkit.DyeColor;
-import org.bukkit.Material;
 import org.bukkit.entity.TropicalFish;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.TropicalFishBucketMeta;
@@ -14,7 +14,7 @@ public class FishBucketBuilder extends ItemBuilder<FishBucketBuilder, TropicalFi
     private DyeColor patternColor = DyeColor.WHITE;
     
     public FishBucketBuilder() {
-        super(Material.TROPICAL_FISH_BUCKET);
+        super(SMaterial.TROPICAL_FISH_BUCKET);
     }
     
     public FishBucketBuilder(ItemStack itemStack) {

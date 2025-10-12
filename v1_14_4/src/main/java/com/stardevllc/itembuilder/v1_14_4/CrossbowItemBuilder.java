@@ -1,7 +1,7 @@
 package com.stardevllc.itembuilder.v1_14_4;
 
 import com.stardevllc.itembuilder.ItemBuilder;
-import org.bukkit.Material;
+import com.stardevllc.smaterial.SMaterial;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.CrossbowMeta;
 
@@ -13,7 +13,7 @@ public class CrossbowItemBuilder extends ItemBuilder<CrossbowItemBuilder, Crossb
     private List<ItemStack> projectiles = new LinkedList<>();
     
     public CrossbowItemBuilder() {
-        super(Material.CROSSBOW);
+        super(SMaterial.CROSSBOW);
     }
     
     public CrossbowItemBuilder(CrossbowItemBuilder builder) {

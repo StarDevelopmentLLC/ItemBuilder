@@ -1,10 +1,8 @@
 package com.stardevllc.itembuilder.v1_20_1;
 
 import com.stardevllc.itembuilder.ItemBuilder;
-import com.stardevllc.itembuilder.enums.ArmorMaterial;
-import com.stardevllc.itembuilder.enums.ArmorSlot;
+import com.stardevllc.smaterial.*;
 import org.bukkit.Color;
-import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ArmorMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
@@ -14,7 +12,7 @@ public class ArmorItemBuilder extends ItemBuilder<ArmorItemBuilder, ArmorMeta> {
     protected ArmorTrim trim;
     protected Color color;
     
-    public ArmorItemBuilder(Material material) {
+    public ArmorItemBuilder(SMaterial material) {
         super(material);
     }
     
@@ -31,7 +29,7 @@ public class ArmorItemBuilder extends ItemBuilder<ArmorItemBuilder, ArmorMeta> {
     }
     
     public ArmorItemBuilder(ArmorMaterial material, ArmorSlot slot) {
-        super(Material.valueOf(material.name() + "_" + slot.name()));
+        super(SMaterial.valueOf(material.name() + "_" + slot.name()));
     }
     
     public ArmorItemBuilder(ArmorItemBuilder builder) {

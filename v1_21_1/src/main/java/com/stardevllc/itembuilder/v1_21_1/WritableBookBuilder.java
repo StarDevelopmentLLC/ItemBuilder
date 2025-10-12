@@ -1,7 +1,7 @@
 package com.stardevllc.itembuilder.v1_21_1;
 
 import com.stardevllc.itembuilder.ItemBuilder;
-import org.bukkit.Material;
+import com.stardevllc.smaterial.SMaterial;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.WritableBookMeta;
 
@@ -13,7 +13,7 @@ public class WritableBookBuilder extends ItemBuilder<WritableBookBuilder, Writab
     protected List<String> pages = new LinkedList<>();
     
     public WritableBookBuilder() {
-        super(Material.WRITABLE_BOOK);
+        super(SMaterial.WRITABLE_BOOK);
     }
     
     public WritableBookBuilder(ItemStack itemStack) {

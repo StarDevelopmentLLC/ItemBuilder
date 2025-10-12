@@ -1,7 +1,7 @@
 package com.stardevllc.itembuilder.v1_21_1;
 
 import com.stardevllc.itembuilder.ItemBuilder;
-import org.bukkit.Material;
+import com.stardevllc.smaterial.SMaterial;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.OminousBottleMeta;
 
@@ -10,7 +10,7 @@ public class OminousBottleBuilder extends ItemBuilder<OminousBottleBuilder, Omin
     protected int amplifier;
     
     public OminousBottleBuilder() {
-        super(Material.OMINOUS_BOTTLE);
+        super(SMaterial.OMINOUS_BOTTLE);
     }
     
     public OminousBottleBuilder(ItemStack itemStack) {

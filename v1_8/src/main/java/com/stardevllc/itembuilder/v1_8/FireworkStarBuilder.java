@@ -1,8 +1,8 @@
 package com.stardevllc.itembuilder.v1_8;
 
 import com.stardevllc.itembuilder.ItemBuilder;
+import com.stardevllc.smaterial.SMaterial;
 import org.bukkit.FireworkEffect;
-import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.FireworkEffectMeta;
 
@@ -11,7 +11,7 @@ public class FireworkStarBuilder extends ItemBuilder<FireworkStarBuilder, Firewo
     private FireworkEffect effect;
     
     public FireworkStarBuilder() {
-        super(Material.FIREWORK_CHARGE);
+        super(SMaterial.FIREWORK_STAR);
     }
     
     public FireworkStarBuilder(ItemStack itemStack) {

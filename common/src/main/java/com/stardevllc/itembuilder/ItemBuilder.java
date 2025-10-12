@@ -2,15 +2,14 @@ package com.stardevllc.itembuilder;
 
 //import com.stardevllc.starcore.api.wrappers.AttributeModifierWrapper;
 //import com.stardevllc.starcore.api.wrappers.MCWrappers;
+
+import com.stardevllc.smaterial.SMaterial;
 import com.stardevllc.starlib.builder.IBuilder;
-//import de.tr7zw.nbtapi.NBT;
-//import de.tr7zw.nbtapi.iface.ReadWriteNBT;
-//import de.tr7zw.nbtapi.iface.ReadableNBT;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
-import org.bukkit.inventory.*;
+import org.bukkit.inventory.ItemFlag;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.Repairable;
 
@@ -21,7 +20,7 @@ import java.util.stream.Collectors;
 public abstract class ItemBuilder<I extends ItemBuilder<I, M>, M extends ItemMeta> implements IBuilder<ItemStack, I> {
     public static Function<String, String> colorFunction = s -> ChatColor.translateAlternateColorCodes('&', s);
     
-    protected Material material;
+    protected SMaterial material;
     protected int amount;
 //    protected Map<String, AttributeModifierWrapper> attributes = new HashMap<>();
     protected Map<Enchantment, Integer> enchantments = new HashMap<>();
@@ -55,7 +54,7 @@ public abstract class ItemBuilder<I extends ItemBuilder<I, M>, M extends ItemMet
     }
     
     public ItemBuilder(ItemStack itemStack) {
-        this.material = itemStack.getType();
+        this.material = SMaterial.matchXMaterial(itemStack);
         this.amount = itemStack.getAmount();
         this.enchantments.putAll(itemStack.getEnchantments());
         this.damage = itemStack.getDurability();
@@ -110,7 +109,7 @@ public abstract class ItemBuilder<I extends ItemBuilder<I, M>, M extends ItemMet
 //        }
     }
 
-    public ItemBuilder(Material material) {
+    public ItemBuilder(SMaterial material) {
         this.material = material;
     }
 
@@ -158,7 +157,7 @@ public abstract class ItemBuilder<I extends ItemBuilder<I, M>, M extends ItemMet
         return self();
     }
 
-    public I material(Material material) {
+    public I material(SMaterial material) {
         this.material = material;
         return self();
     }
@@ -194,7 +193,7 @@ public abstract class ItemBuilder<I extends ItemBuilder<I, M>, M extends ItemMet
     }
 
     protected M createItemMeta() {
-        M itemMeta = (M) Bukkit.getItemFactory().getItemMeta(this.material/*.parseMaterial()*/);
+        M itemMeta = (M) Bukkit.getItemFactory().getItemMeta(this.material.parseMaterial());
 
         if (!this.enchantments.isEmpty()) {
             this.enchantments.forEach((enchant, level) -> itemMeta.addEnchant(enchant, level, true));
@@ -231,8 +230,8 @@ public abstract class ItemBuilder<I extends ItemBuilder<I, M>, M extends ItemMet
 //            return null;
 //        }
 
-//        ItemStack itemStack = material.parseItem();
-        ItemStack itemStack = new ItemStack(material);
+        ItemStack itemStack = material.parseItem();
+//        ItemStack itemStack = new ItemStack(material);
         itemStack.setAmount(amount);
         ItemMeta itemMeta = createItemMeta();
         itemStack.setItemMeta(itemMeta);

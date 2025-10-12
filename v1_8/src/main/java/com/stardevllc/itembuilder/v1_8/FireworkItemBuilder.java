@@ -1,8 +1,8 @@
 package com.stardevllc.itembuilder.v1_8;
 
 import com.stardevllc.itembuilder.ItemBuilder;
+import com.stardevllc.smaterial.SMaterial;
 import org.bukkit.FireworkEffect;
-import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.FireworkMeta;
 
@@ -14,7 +14,7 @@ public class FireworkItemBuilder extends ItemBuilder<FireworkItemBuilder, Firewo
     private int power;
     
     public FireworkItemBuilder() {
-        super(Material.FIREWORK);
+        super(SMaterial.FIREWORK_ROCKET);
     }
     
     public FireworkItemBuilder(ItemStack itemStack) {

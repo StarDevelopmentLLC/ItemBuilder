@@ -1,7 +1,7 @@
 package com.stardevllc.itembuilder.v1_17_1;
 
 import com.stardevllc.itembuilder.ItemBuilder;
-import org.bukkit.Material;
+import com.stardevllc.smaterial.SMaterial;
 import org.bukkit.entity.Axolotl;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.AxolotlBucketMeta;
@@ -11,7 +11,7 @@ public class AxolotlItemBuilder extends ItemBuilder<AxolotlItemBuilder, AxolotlB
     private Axolotl.Variant variant;
     
     public AxolotlItemBuilder() {
-        super(Material.AXOLOTL_BUCKET);
+        super(SMaterial.AXOLOTL_BUCKET);
     }
     
     public AxolotlItemBuilder(ItemStack itemStack) {

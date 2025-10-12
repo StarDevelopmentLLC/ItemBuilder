@@ -1,8 +1,8 @@
 package com.stardevllc.itembuilder.v1_13_2;
 
 import com.stardevllc.itembuilder.ItemBuilder;
+import com.stardevllc.smaterial.SMaterial;
 import org.bukkit.Color;
-import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.MapMeta;
 import org.bukkit.map.MapView;
@@ -14,7 +14,7 @@ public class MapItemBuilder extends ItemBuilder<MapItemBuilder, MapMeta> {
     private boolean scaling;
     
     public MapItemBuilder() {
-        super(Material.MAP);
+        super(SMaterial.MAP);
     }
     
     public MapItemBuilder(ItemStack itemStack) {

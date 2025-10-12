@@ -5,11 +5,13 @@ plugins {
 repositories {
     mavenLocal()
     mavenCentral()
+    maven { url = 'https://repo.stardevllc.com/releases'}
 }
 
 dependencies {
     compileOnly 'org.spigotmc:spigot-api:1.16.1-R0.1-SNAPSHOT'
     compileOnly "com.stardevllc:StarLib:${starlibVersion}"
+    compileOnly "com.stardevllc:StarMaterial:${starmaterialVersion}"
     implementation project(':common')
 }
 

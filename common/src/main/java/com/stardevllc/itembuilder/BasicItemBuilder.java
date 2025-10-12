@@ -1,6 +1,6 @@
 package com.stardevllc.itembuilder;
 
-import org.bukkit.Material;
+import com.stardevllc.smaterial.SMaterial;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -17,7 +17,7 @@ public class BasicItemBuilder extends ItemBuilder<BasicItemBuilder, ItemMeta> {
         super(builder);
     }
     
-    public BasicItemBuilder(Material material) {
+    public BasicItemBuilder(SMaterial material) {
         super(material);
     }
     

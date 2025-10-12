@@ -1,7 +1,7 @@
 package com.stardevllc.itembuilder.v1_8;
 
 import com.stardevllc.itembuilder.ItemBuilder;
-import org.bukkit.Material;
+import com.stardevllc.smaterial.SMaterial;
 import org.bukkit.block.banner.Pattern;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BannerMeta;
@@ -29,7 +29,7 @@ public class BannerItemBuilder extends ItemBuilder<BannerItemBuilder, BannerMeta
         this.patterns.addAll(builder.patterns);
     }
     
-    public BannerItemBuilder(Material material) {
+    public BannerItemBuilder(SMaterial material) {
         super(material);
     }
     

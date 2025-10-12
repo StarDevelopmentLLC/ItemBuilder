@@ -1,8 +1,8 @@
 package com.stardevllc.itembuilder.v1_16_1;
 
 import com.stardevllc.itembuilder.ItemBuilder;
+import com.stardevllc.smaterial.SMaterial;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.CompassMeta;
 
@@ -12,7 +12,7 @@ public class CompassItemBuilder extends ItemBuilder<CompassItemBuilder, CompassM
     private boolean tracked;
     
     public CompassItemBuilder() {
-        super(Material.COMPASS);
+        super(SMaterial.COMPASS);
     }
     
     public CompassItemBuilder(ItemStack itemStack) {

@@ -1,7 +1,7 @@
 package com.stardevllc.itembuilder.v1_19_3;
 
 import com.stardevllc.itembuilder.ItemBuilder;
-import org.bukkit.Material;
+import com.stardevllc.smaterial.SMaterial;
 import org.bukkit.MusicInstrument;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.MusicInstrumentMeta;
@@ -11,7 +11,7 @@ public class GoatHornBuilder extends ItemBuilder<GoatHornBuilder, MusicInstrumen
     private MusicInstrument instrument;
     
     public GoatHornBuilder() {
-        super(Material.GOAT_HORN);
+        super(SMaterial.GOAT_HORN);
     }
     
     public GoatHornBuilder(ItemStack itemStack) {
