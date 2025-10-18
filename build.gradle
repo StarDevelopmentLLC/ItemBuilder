@@ -30,6 +30,14 @@ publishing {
     publications {
         maven(MavenPublication) {
             from components.shadow
+
+            artifact ("build/libs/${project.name}-${project.version}-javadoc.jar") {
+                classifier = "javadoc"
+            }
+
+            artifact ("build/libs/${project.name}-${project.version}-sources.jar") {
+                classifier = "sources"
+            }
         }
     }
 }
@@ -38,6 +46,9 @@ java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(21)
     }
+
+    withJavadocJar()
+    withSourcesJar()
 }
 
 dependencies {
@@ -62,14 +73,41 @@ tasks.named('shadowJar', ShadowJar) {
     archiveClassifier = ''
 }
 
+tasks.named("javadoc", Javadoc) {
+    source = subprojects.collect { subproject ->
+        subproject.sourceSets.main.allJava
+    }
+    source += project.sourceSets.main.allJava
+
+    classpath = files(subprojects.collect { subproject ->
+        subproject.sourceSets.main.compileClasspath
+        subproject.sourceSets.main.runtimeClasspath
+    })
+
+    classpath += project.sourceSets.main.compileClasspath
+}
+
+tasks.named('sourcesJar', Jar) {
+    archiveClassifier.set("sources")
+    from sourceSets.main.allSource
+
+    subprojects { subproject ->
+        from subproject.sourceSets.main.allSource
+    }
+}
+
 tasks.compileJava.dependsOn(clean)
 tasks.jar.finalizedBy(shadowJar)
 tasks.build.finalizedBy(publishToMavenLocal)
 
 tasks.withType(PublishToMavenLocal).configureEach {
     dependsOn(shadowJar)
+    dependsOn(javadocJar)
+    dependsOn(sourcesJar)
 }
 
 tasks.withType(PublishToMavenRepository).configureEach {
     dependsOn(shadowJar)
+    dependsOn(javadocJar)
+    dependsOn(sourcesJar)
 }

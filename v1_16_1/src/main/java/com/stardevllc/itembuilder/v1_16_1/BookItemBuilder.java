@@ -6,6 +6,7 @@ import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BookMeta;
+import org.bukkit.inventory.meta.BookMeta.Generation;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -14,7 +15,7 @@ public class BookItemBuilder extends ItemBuilder<BookItemBuilder, BookMeta> {
     
     private String author;
     private List<BaseComponent[]> pages = new LinkedList<>();
-    private BookMeta.Generation generation;
+    private Generation generation;
     private String title;
     
     public BookItemBuilder(SMaterial material) {
@@ -73,7 +74,7 @@ public class BookItemBuilder extends ItemBuilder<BookItemBuilder, BookMeta> {
         return this;
     }
     
-    public BookItemBuilder generation(BookMeta.Generation generation) {
+    public BookItemBuilder generation(Generation generation) {
         this.generation = generation;
         return this;
     }
