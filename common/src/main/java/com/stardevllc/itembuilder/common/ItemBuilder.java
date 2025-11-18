@@ -3,7 +3,7 @@ package com.stardevllc.itembuilder.common;
 import com.stardevllc.smaterial.SMaterial;
 import com.stardevllc.smcversion.MCWrappers;
 import com.stardevllc.smcversion.wrappers.AttributeModifierWrapper;
-import com.stardevllc.starlib.builder.IBuilder;
+import com.stardevllc.starlib.objects.builder.IBuilder;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
 import org.bukkit.enchantments.Enchantment;
