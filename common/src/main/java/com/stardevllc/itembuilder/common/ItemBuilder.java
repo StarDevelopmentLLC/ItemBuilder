@@ -4,6 +4,7 @@ import com.stardevllc.smaterial.SMaterial;
 import com.stardevllc.smcversion.MCWrappers;
 import com.stardevllc.smcversion.wrappers.AttributeModifierWrapper;
 import com.stardevllc.starlib.objects.builder.IBuilder;
+import com.stardevllc.starlib.reflection.ReflectionHelper;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
 import org.bukkit.enchantments.Enchantment;
@@ -11,11 +12,39 @@ import org.bukkit.inventory.*;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.Repairable;
 
+import java.lang.reflect.Method;
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public abstract class ItemBuilder<I extends ItemBuilder<I, M>, M extends ItemMeta> implements IBuilder<ItemStack, I> {
+    //Reflection methods for the unbreakable flag
+    
+    //These are the set and is unbreakable methods in ItemMeta itself. This is in newer spigot versions and should be preferred
+    private static final Method metaSetUnbreakable = ReflectionHelper.getClassMethod(ItemMeta.class, "setUnbreakable", boolean.class);
+    private static final Method metaIsUnbreakable = ReflectionHelper.getClassMethod(ItemMeta.class, "isUnbreakable");
+    
+    //These are relalted to the spigot() based unbreakable methods 
+    private static final Method metaSpigot = ReflectionHelper.getClassMethod(ItemMeta.class, "spigot");
+    
+    private static final Method spigotSetUnbreakable, spigotIsUnbreakable;
+    
+    //Need a static initializer to allow detection of the spigot() method without errors
+    static {
+        Class<?> metaSpigotClass = null;
+        try {
+            metaSpigotClass = Class.forName("org.bukkit.inventory.meta.ItemMeta$Spigot");
+        } catch (Throwable e) {}
+        
+        if (metaSpigotClass != null) {
+            spigotSetUnbreakable = ReflectionHelper.getClassMethod(metaSpigotClass, "setUnbreakable", boolean.class);
+            spigotIsUnbreakable = ReflectionHelper.getClassMethod(metaSpigotClass, "isUnbreakable");
+        } else {
+            spigotSetUnbreakable = null;
+            spigotIsUnbreakable = null;
+        }
+    }
+    
     public static Function<String, String> colorFunction = s -> ChatColor.translateAlternateColorCodes('&', s);
     
     protected SMaterial material;
@@ -54,7 +83,6 @@ public abstract class ItemBuilder<I extends ItemBuilder<I, M>, M extends ItemMet
         this.damage = itemStack.getDurability();
         
 //        NBT.get(itemStack, nbt -> {
-//            unbreakable = nbt.getBoolean("Unbreakable");
 //            damage = nbt.getInteger("Damage");
 //        });
         
@@ -65,6 +93,17 @@ public abstract class ItemBuilder<I extends ItemBuilder<I, M>, M extends ItemMet
         
         ItemMeta itemMeta = itemStack.getItemMeta();
         if (itemMeta != null) {
+            if (metaIsUnbreakable != null) {
+                try {
+                    this.unbreakable = (boolean) metaIsUnbreakable.invoke(itemStack.getItemMeta());
+                } catch (Throwable e) {}
+            } else if (metaSpigot != null && spigotIsUnbreakable != null) {
+                try {
+                    Object spigot = metaSpigot.invoke(itemMeta);
+                    this.unbreakable = (boolean) spigotIsUnbreakable.invoke(spigot);
+                } catch (Throwable e) {}
+            }
+            
             if (itemMeta.getItemFlags() != null) {
                 this.itemFlags.addAll(itemMeta.getItemFlags());
             }
@@ -199,6 +238,19 @@ public abstract class ItemBuilder<I extends ItemBuilder<I, M>, M extends ItemMet
 
         if (this.displayName != null) {
             itemMeta.setDisplayName(colorFunction.apply(this.displayName));
+        }
+        
+        if (unbreakable) {
+            if (metaSetUnbreakable != null) {
+                try {
+                    metaSetUnbreakable.invoke(itemMeta, true);
+                } catch (Throwable e) {}
+            } else if (metaSpigot != null && spigotSetUnbreakable != null) {
+                try {
+                    Object spigot = metaSpigot.invoke(itemMeta);
+                    spigotSetUnbreakable.invoke(spigot, true);
+                } catch (Throwable e) {}
+            }
         }
         
         List<String> coloredLore = this.lore.stream().map(line -> colorFunction.apply(line)).collect(Collectors.toCollection(LinkedList::new));
