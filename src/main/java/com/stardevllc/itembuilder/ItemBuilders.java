@@ -14,8 +14,12 @@ import com.stardevllc.itembuilder.v1_21_1.OminousBottleBuilder;
 import com.stardevllc.itembuilder.v1_21_1.WritableBookBuilder;
 import com.stardevllc.itembuilder.v1_8.*;
 import com.stardevllc.smaterial.SMaterial;
+import com.stardevllc.starlib.serialization.StarSerializable;
+import com.stardevllc.starlib.serialization.StarSerialization;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.configuration.serialization.ConfigurationSerializable;
+import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.*;
 
@@ -26,50 +30,62 @@ import java.util.Map;
 public final class ItemBuilders {
     private static final Map<Class<? extends ItemMeta>, Class<? extends ItemBuilder<?, ?>>> META_TO_BUILDERS = new HashMap<>();
     
+    private static <S extends StarSerializable & ConfigurationSerializable> void registerSerialization(Class<S> c) {
+        StarSerialization.registerClass(c);
+        ConfigurationSerialization.registerClass(c);
+    }
+    
+    private static <M extends ItemMeta> void registerBuilder(Class<M> meta, Class<? extends ItemBuilder<?, M>> c) {
+        try {
+            ItemBuilders.mapMetaToBuilder(meta, c);
+            ItemBuilders.registerSerialization(c);
+        } catch (Throwable t) {}
+    }
+    
     public static void init() {
         //Due to how java class files are, the imports are not a major problem and this should be fine
         try {
-            ItemBuilders.mapMetaToBuilder(BannerMeta.class, BannerItemBuilder.class);
-            ItemBuilders.mapMetaToBuilder(EnchantmentStorageMeta.class, EnchantedBookBuilder.class);
-            ItemBuilders.mapMetaToBuilder(FireworkMeta.class, FireworkItemBuilder.class);
-            ItemBuilders.mapMetaToBuilder(FireworkEffectMeta.class, FireworkStarBuilder.class);
-            ItemBuilders.mapMetaToBuilder(SkullMeta.class, SkullItemBuilder.class);
+            ItemBuilders.registerBuilder(BannerMeta.class, BannerItemBuilder.class);
+            ItemBuilders.registerBuilder(EnchantmentStorageMeta.class, EnchantedBookBuilder.class);
+            ItemBuilders.registerBuilder(FireworkMeta.class, FireworkItemBuilder.class);
+            ItemBuilders.registerBuilder(FireworkEffectMeta.class, FireworkStarBuilder.class);
+            ItemBuilders.registerBuilder(SkullMeta.class, SkullItemBuilder.class);
         } catch (Throwable e) {}
         
         try {
-            ItemBuilders.mapMetaToBuilder(TropicalFishBucketMeta.class, FishBucketBuilder.class);
+            ItemBuilders.registerBuilder(TropicalFishBucketMeta.class, FishBucketBuilder.class);
         } catch (Throwable e) {}
         
         try {
-            ItemBuilders.mapMetaToBuilder(MapMeta.class, MapItemBuilder.class);
+            ItemBuilders.registerBuilder(MapMeta.class, MapItemBuilder.class);
         } catch (Throwable e) {}
         
         try {
-            ItemBuilders.mapMetaToBuilder(CrossbowMeta.class, CrossbowItemBuilder.class);
-            ItemBuilders.mapMetaToBuilder(SuspiciousStewMeta.class, StewItemBuilder.class);
-            ItemBuilders.mapMetaToBuilder(BlockDataMeta.class, BlockDataItemBuilder.class);
+            ItemBuilders.registerBuilder(CrossbowMeta.class, CrossbowItemBuilder.class);
+            ItemBuilders.registerBuilder(SuspiciousStewMeta.class, StewItemBuilder.class);
+            ItemBuilders.registerBuilder(BlockDataMeta.class, BlockDataItemBuilder.class);
         } catch (Throwable e) {}
         
         try {
-            ItemBuilders.mapMetaToBuilder(BookMeta.class, BookItemBuilder.class);
-            ItemBuilders.mapMetaToBuilder(CompassMeta.class, CompassItemBuilder.class);
+            ItemBuilders.registerBuilder(BookMeta.class, BookItemBuilder.class);
+            ItemBuilders.registerBuilder(CompassMeta.class, CompassItemBuilder.class);
         } catch (Throwable e) {}
         
         try {
-            ItemBuilders.mapMetaToBuilder(AxolotlBucketMeta.class, AxolotlItemBuilder.class);
+            ItemBuilders.registerBuilder(AxolotlBucketMeta.class, AxolotlItemBuilder.class);
         } catch (Throwable e) {}
         
         try {
-            ItemBuilders.mapMetaToBuilder(MusicInstrumentMeta.class, GoatHornBuilder.class);
+            ItemBuilders.registerBuilder(MusicInstrumentMeta.class, GoatHornBuilder.class);
         } catch (Throwable e) {}
         
         try {
-            ItemBuilders.mapMetaToBuilder(ArmorMeta.class, ArmorItemBuilder.class);
+            ItemBuilders.registerBuilder(ArmorMeta.class, ArmorItemBuilder.class);
         } catch (Throwable e) {}
         
         try {
-            ItemBuilders.mapMetaToBuilder(OminousBottleMeta.class, OminousBottleBuilder.class);
-            ItemBuilders.mapMetaToBuilder(WritableBookMeta.class, WritableBookBuilder.class);
+            ItemBuilders.registerBuilder(OminousBottleMeta.class, OminousBottleBuilder.class);
+            ItemBuilders.registerBuilder(WritableBookMeta.class, WritableBookBuilder.class);
         } catch (Throwable e) {}
     }
     

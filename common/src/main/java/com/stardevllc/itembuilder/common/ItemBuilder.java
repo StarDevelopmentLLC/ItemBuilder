@@ -5,8 +5,10 @@ import com.stardevllc.smcversion.MCWrappers;
 import com.stardevllc.smcversion.wrappers.AttributeModifierWrapper;
 import com.stardevllc.starlib.objects.builder.IBuilder;
 import com.stardevllc.starlib.reflection.ReflectionHelper;
+import com.stardevllc.starlib.serialization.StarSerializable;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
+import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.*;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -17,7 +19,7 @@ import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-public abstract class ItemBuilder<I extends ItemBuilder<I, M>, M extends ItemMeta> implements IBuilder<ItemStack, I> {
+public abstract class ItemBuilder<I extends ItemBuilder<I, M>, M extends ItemMeta> implements IBuilder<ItemStack, I>, StarSerializable, ConfigurationSerializable {
     //Reflection methods for the unbreakable flag
     
     //These are the set and is unbreakable methods in ItemMeta itself. This is in newer spigot versions and should be preferred
@@ -145,7 +147,39 @@ public abstract class ItemBuilder<I extends ItemBuilder<I, M>, M extends ItemMet
     public ItemBuilder(SMaterial material) {
         this.material = material;
     }
-
+    
+    //TODO Enchantments and Attributes will not save or load correctly, mostly just a placeholder for now
+    //Will probably make something similar to SMaterial for enchants
+    public ItemBuilder(Map<String, Object> serialized) {
+        this.material = (SMaterial) serialized.get("material");
+        this.amount = (int) serialized.get("amount");
+        this.attributes = (Map<String, AttributeModifierWrapper>) serialized.get("attributes");
+        this.enchantments = (Map<Enchantment, Integer>) serialized.get("enchantments");
+        this.itemFlags = (List<ItemFlag>) serialized.get("flags");
+        this.displayName = (String) serialized.get("displayname");
+        this.lore = (List<String>) serialized.get("lore");
+        this.unbreakable = (boolean) serialized.get("unbreakable");
+        this.repairCost = (int) serialized.get("repaircost");
+        this.damage = (int) serialized.get("damage");
+    }
+    
+    @Override
+    public Map<String, Object> serialize() {
+        Map<String, Object> serialized = new HashMap<>();
+        serialized.put("material", material);
+        serialized.put("amount", amount);
+        serialized.put("attributes", attributes);
+        serialized.put("enchantments", enchantments);
+        serialized.put("flags", itemFlags);
+        serialized.put("displayname", displayName);
+        serialized.put("lore", lore);
+        serialized.put("unbreakable", unbreakable);
+        serialized.put("repaircost", repairCost);
+        serialized.put("damage", damage);
+        
+        return serialized;
+    }
+    
     public I addAttributeModifier(String attribute, String name, double amount, String operation, EquipmentSlot slot) {
         this.attributes.put(attribute, new AttributeModifierWrapper(UUID.randomUUID(), name, amount, operation, slot));
         return self();
