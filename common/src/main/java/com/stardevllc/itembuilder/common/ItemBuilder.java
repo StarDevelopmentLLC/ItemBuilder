@@ -79,7 +79,7 @@ public abstract class ItemBuilder<I extends ItemBuilder<I, M>, M extends ItemMet
     }
     
     public ItemBuilder(ItemStack itemStack) {
-        this.material = SMaterial.matchXMaterial(itemStack);
+        this.material = SMaterial.matchSMaterial(itemStack);
         this.amount = itemStack.getAmount();
         this.enchantments.putAll(itemStack.getEnchantments());
         this.damage = itemStack.getDurability();
